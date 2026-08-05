@@ -4,8 +4,10 @@ export default defineConfig({
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts'],
+    setupFiles: ['./vitest.setup.ts'],
     env: {
       GHOST_CONTENT_API_KEY: '1234567890abcdef1234567890',
     },
+    globals: true,
   },
 });
