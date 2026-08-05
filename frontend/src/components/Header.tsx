@@ -9,7 +9,7 @@ export default function Header() {
         </Link>
         <nav className="flex space-x-6 text-sm font-medium text-slate-600">
           <Link href="/" className="hover:text-blue-600 transition">Latest</Link>
-          <a href={process.env.GHOST_URL ? `${process.env.GHOST_URL}/ghost` : '#'} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">
+          <a href={process.env.NEXT_PUBLIC_GHOST_ADMIN_URL ? `${process.env.NEXT_PUBLIC_GHOST_ADMIN_URL}/ghost` : '#'} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">
             Writer Login
           </a>
         </nav>

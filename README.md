@@ -11,7 +11,7 @@ Headless Ghost CMS + Next.js frontend + Streamlit AI chatbot.
    cp .env.example frontend/.env.local
    cp .env.example chatbot/.env
    ```
-   Edit each file to fill in real values. For local dev, `GHOST_URL` in both should point to `http://ghost:2368` (the in-network service name), and `GEMINI_API_KEY` needs a real key from Google AI Studio for the chatbot to respond with real answers (it falls back gracefully if omitted).
+   Edit each file to fill in real values. For local dev, `GHOST_URL` in both should point to `http://ghost:2368` (the in-network service name, used for server-side Ghost API calls). In `frontend/.env.local` specifically, also set `NEXT_PUBLIC_GHOST_ADMIN_URL="http://localhost:2368"` — this is a separate variable because it's rendered into a link your browser opens directly, and your browser can't resolve `ghost` as a hostname the way containers on the Docker network can. `GEMINI_API_KEY` needs a real key from Google AI Studio for the chatbot to respond with real answers (it falls back gracefully if omitted).
 
 3. **Start everything:**
    ```bash
