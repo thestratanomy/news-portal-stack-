@@ -1,5 +1,6 @@
 import GhostContentAPI from '@tryghost/content-api';
 import { GhostPost } from './types';
+import { logError } from './logger';
 
 const url = process.env.GHOST_URL || 'http://localhost:2368';
 const key = process.env.GHOST_CONTENT_API_KEY || 'ghost_demo_key';
@@ -18,7 +19,7 @@ export async function getPosts(): Promise<GhostPost[]> {
     });
     return posts as unknown as GhostPost[];
   } catch (error) {
-    console.error('Error fetching Ghost posts:', error);
+    logError('Error fetching Ghost posts', { error: String(error) });
     return [];
   }
 }
@@ -31,7 +32,7 @@ export async function getSinglePost(slug: string): Promise<GhostPost | null> {
     );
     return post as unknown as GhostPost;
   } catch (error) {
-    console.error(`Error fetching Ghost post ${slug}:`, error);
+    logError(`Error fetching Ghost post ${slug}`, { error: String(error) });
     return null;
   }
 }
