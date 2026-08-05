@@ -1,6 +1,6 @@
 import streamlit as st
 
-from utils.gemini_client import stream_reply
+from utils.gemini_client import is_configured, stream_reply
 
 
 def render_chat_interface(context_article=None):
@@ -22,5 +22,7 @@ def render_chat_interface(context_article=None):
             st.markdown(prompt)
 
         with st.chat_message("assistant"):
+            if not is_configured():
+                st.warning("Gemini API key is not configured — using fallback responses.", icon="⚠️")
             reply = st.write_stream(stream_reply(prompt, context_article))
             st.session_state.messages.append({"role": "assistant", "content": reply})

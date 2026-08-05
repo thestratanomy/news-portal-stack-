@@ -2,6 +2,7 @@ import os
 from typing import Iterator, Optional
 
 import google.generativeai as genai
+import streamlit as st
 
 from utils.logger import get_logger
 
@@ -49,4 +50,5 @@ def stream_reply(prompt: str, context_article: Optional[dict]) -> Iterator[str]:
                 yield chunk.text
     except Exception as e:
         logger.error(f"Gemini API error: {e}")
+        st.warning("The assistant is temporarily unavailable — using a fallback response.", icon="⚠️")
         yield FALLBACK_MESSAGE
