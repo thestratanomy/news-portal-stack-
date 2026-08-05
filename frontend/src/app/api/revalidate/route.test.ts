@@ -19,7 +19,8 @@ vi.mock('next/server', async () => {
 });
 
 import { NextRequest, NextResponse } from 'next/server';
-import { POST, safeCompare, checkRateLimit, _resetRateLimitForTests } from './route';
+import { POST } from './route';
+import { safeCompare, checkRateLimit, _resetRateLimitForTests } from '../../../lib/revalidate-utils';
 
 function makeRequest(secret: string | null, ip = '1.2.3.4') {
   const url = secret === null
