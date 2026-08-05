@@ -3,11 +3,14 @@ Object.assign(global, {
   Request: class Request {
     method: string;
     headers: Map<string, string>;
-    url: string;
+    _url: string;
     constructor(url: string, init?: any) {
-      this.url = url;
+      this._url = url;
       this.method = init?.method || 'GET';
       this.headers = new Map(Object.entries(init?.headers || {}));
+    }
+    get url() {
+      return this._url;
     }
   } as any,
   Response: class Response {
