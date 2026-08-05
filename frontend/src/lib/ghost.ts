@@ -3,7 +3,7 @@ import { GhostPost } from './types';
 import { logError } from './logger';
 
 const url = process.env.GHOST_URL || 'http://localhost:2368';
-const key = process.env.GHOST_CONTENT_API_KEY || 'ghost_demo_key';
+const key = process.env.GHOST_CONTENT_API_KEY || '0'.repeat(26);
 
 export const ghostApi = new GhostContentAPI({
   url,
