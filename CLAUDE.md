@@ -96,7 +96,7 @@ Streamlit (chatbot/.env or st.secrets)
 Code snippet
 GHOST_URL="[https://your-ghost-service.onrender.com](https://your-ghost-service.onrender.com)"
 GHOST_CONTENT_API_KEY="your_ghost_content_api_key"
-OPENAI_API_KEY="your_llm_api_key"
+GEMINI_API_KEY="your_gemini_api_key"
 6. Implementation Rules for Claude Code
 Keep the Next.js client bundle thin: isolate interactive components (like the Streamlit iframe drawer) using 'use client'.
 
