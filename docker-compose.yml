@@ -33,8 +33,7 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - path: ./frontend/.env.local
-        required: false
+      - ./frontend/.env.local
     depends_on:
       - ghost
 
@@ -44,8 +43,7 @@ services:
     ports:
       - "8501:8501"
     env_file:
-      - path: ./chatbot/.env
-        required: false
+      - ./chatbot/.env
     depends_on:
       - ghost
 
