@@ -1,15 +1,38 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Bot, X } from 'lucide-react';
+
+const IFRAME_LOAD_TIMEOUT_MS = 8000;
 
 export default function ChatDrawer({ currentSlug }: { currentSlug?: string }) {
   const [isOpen, setIsOpen] = useState(false);
-  const streamlitUrl = process.env.NEXT_PUBLIC_STREAMLIT_URL || 'http://localhost:8501';
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [iframeFailed, setIframeFailed] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
+  const streamlitUrl = process.env.NEXT_PUBLIC_STREAMLIT_URL || 'http://localhost:8501';
   const embedUrl = currentSlug
     ? `${streamlitUrl}/?slug=${encodeURIComponent(currentSlug)}`
     : streamlitUrl;
+
+  useEffect(() => {
+    if (!isOpen || iframeLoaded) return;
+
+    timeoutRef.current = setTimeout(() => {
+      setIframeFailed(true);
+    }, IFRAME_LOAD_TIMEOUT_MS);
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [isOpen, iframeLoaded]);
+
+  const handleIframeLoad = () => {
+    setIframeLoaded(true);
+    setIframeFailed(false);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  };
 
   return (
     <>
@@ -32,11 +55,25 @@ export default function ChatDrawer({ currentSlug }: { currentSlug?: string }) {
               <X size={20} />
             </button>
           </div>
-          <div className="flex-1 w-full h-full bg-slate-50">
+          <div className="relative flex-1 w-full h-full bg-slate-50">
+            {!iframeLoaded && !iframeFailed && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="h-8 w-8 border-4 border-slate-300 border-t-blue-600 rounded-full animate-spin" />
+              </div>
+            )}
+            {iframeFailed && (
+              <div className="absolute inset-0 flex items-center justify-center p-6 text-center">
+                <p className="text-slate-500 text-sm">
+                  Assistant is unavailable right now. Please try again shortly.
+                </p>
+              </div>
+            )}
             <iframe
               src={embedUrl}
+              onLoad={handleIframeLoad}
               className="w-full h-full border-none"
               title="Streamlit News AI Chatbot"
+              style={{ visibility: iframeLoaded ? 'visible' : 'hidden' }}
             />
           </div>
         </div>
