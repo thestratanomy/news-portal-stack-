@@ -1,5 +1,8 @@
 import streamlit as st
 
+from utils.gemini_client import stream_reply
+
+
 def render_chat_interface(context_article=None):
     if "messages" not in st.session_state:
         st.session_state.messages = [
@@ -19,11 +22,5 @@ def render_chat_interface(context_article=None):
             st.markdown(prompt)
 
         with st.chat_message("assistant"):
-            reply = f"I've analyzed your query regarding '{prompt}'."
-            if context_article:
-                reply += f" Based on '{context_article.get('title')}', here is what you need to know..."
-            else:
-                reply += " Searching published news items for context..."
-            
-            st.write(reply)
+            reply = st.write_stream(stream_reply(prompt, context_article))
             st.session_state.messages.append({"role": "assistant", "content": reply})

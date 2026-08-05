@@ -2,6 +2,10 @@ import os
 import requests
 import streamlit as st
 
+from utils.logger import get_logger
+
+logger = get_logger(__name__)
+
 GHOST_URL = os.getenv("GHOST_URL", "http://localhost:2368")
 GHOST_KEY = os.getenv("GHOST_CONTENT_API_KEY")
 
@@ -27,7 +31,7 @@ def fetch_ghost_articles():
         st.warning("Ghost API request timed out. Try again shortly.", icon="⚠️")
         return []
     except requests.exceptions.RequestException as e:
-        print(f"Error connecting to Ghost API: {e}")
+        logger.error(f"Error connecting to Ghost API: {e}")
         st.warning("Unable to reach the Ghost API right now.", icon="⚠️")
         return []
 
@@ -50,6 +54,6 @@ def fetch_single_article(slug: str):
         st.warning("Ghost API request timed out. Try again shortly.", icon="⚠️")
         return None
     except requests.exceptions.RequestException as e:
-        print(f"Error connecting to Ghost API for slug {slug}: {e}")
+        logger.error(f"Error connecting to Ghost API for slug {slug}: {e}")
         st.warning("Unable to reach the Ghost API right now.", icon="⚠️")
         return None
