@@ -6,6 +6,8 @@ services:
       url: docker.io/library/ghost:5-alpine
     plan: free
     envVars:
+      - key: PORT
+        value: "2368"
       - key: database__client
         value: mysql
       - key: database__connection__host
