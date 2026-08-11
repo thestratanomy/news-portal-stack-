@@ -1,0 +1,13 @@
+name: Keep Ghost awake
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Ghost service
+        run: curl -sf -o /dev/null https://ghost-cms-m5um.onrender.com/ghost/api/admin/site/
