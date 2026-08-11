@@ -11,7 +11,7 @@ services:
       - key: database__client
         value: sqlite3
       - key: database__connection__filename
-        value: /tmp/content/data/ghost.db
+        value: /var/lib/ghost/content/data/ghost.db
       - key: database__useNullAsDefault
         value: "true"
       - key: url
