@@ -9,20 +9,10 @@ services:
       - key: PORT
         value: "2368"
       - key: database__client
-        value: mysql
-      - key: database__connection__host
-        sync: false
-      - key: database__connection__port
-        sync: false
-      - key: database__connection__user
-        value: avnadmin
-      - key: database__connection__password
-        sync: false
-      - key: database__connection__database
-        value: defaultdb
-      - key: database__connection__ssl__rejectUnauthorized
+        value: sqlite3
+      - key: database__connection__filename
+        value: /tmp/content/data/ghost.db
+      - key: database__useNullAsDefault
         value: "true"
-      - key: database__connection__ssl__ca
-        sync: false
       - key: url
         sync: false
