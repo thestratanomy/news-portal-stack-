@@ -19,7 +19,7 @@ def is_configured() -> bool:
 
 def _get_model():
     genai.configure(api_key=GEMINI_KEY)
-    return genai.GenerativeModel("gemini-1.5-flash")
+    return genai.GenerativeModel("gemini-flash-latest")
 
 
 def _build_prompt(prompt: str, context_article: Optional[dict]) -> str:
